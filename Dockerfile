@@ -1,17 +1,17 @@
 FROM python:3
 
-COPY web.py /root/
-
-COPY requirements.txt /root/
-
 WORKDIR /root/
 
-ENTRYPOINT ["python"]
-
-RUN chmod +x requirements.txt
-
+# Copy the dependency list and install dependencies
+COPY requirements.txt .
 RUN pip install -r requirements.txt
 
-RUN python ./web.py && ./requirements.txt
+# Copy the web application script
+COPY web.py .
 
-EXPOSE = 5000
+# Expose port 5000
+EXPOSE 5000
+
+# Set the default command to run your web application
+ENTRYPOINT ["python"]
+CMD ["web.py"]
